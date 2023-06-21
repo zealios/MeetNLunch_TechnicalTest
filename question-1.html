@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Question 1: Power Sum</title>
+  <script>
+    function findPowerSumCombination(X, N) {
+      const combinations = [];
+
+      // Recursive function to find power combinations
+      function findCombinationHelper(start, target, currentCombination) {
+        if (target === 0) {
+          combinations.push(currentCombination);
+          return;
+        }
+
+        for (let i = start; Math.pow(i, N) <= target; i++) {
+          const newTarget = target - Math.pow(i, N);
+          const newCombination = [...currentCombination, i];
+
+          findCombinationHelper(i + 1, newTarget, newCombination);
+        }
+      }
+
+      findCombinationHelper(1, X, []);
+
+      return combinations;
+    }
+
+    function calculateCombinations() {
+      const X = parseInt(document.getElementById('inputX').value);
+      const N = parseInt(document.getElementById('inputN').value);
+
+      const combinations = findPowerSumCombination(X, N);
+      const combinationsJSON = JSON.stringify(combinations);
+      let combinationHtml = combinationsJSON.substring(1, combinationsJSON.length - 1).replace(/],/g, ']<br/>');
+
+      document.getElementById('result').textContent = `Number of combinations: ${combinations.length}`;
+      document.getElementById('combination').innerHTML = combinationHtml;
+    }
+  </script>
+</head>
+<body>
+  <h1>Power Sum</h1>
+
+  <label for="inputX">Enter value for X (1 - 1000):</label>
+  <input type="number" id="inputX" min="1" max="1000">
+
+  <label for="inputN">Enter value for N (2 - 10):</label>
+  <input type="number" id="inputN" min="2" max="10">
+
+  <button onclick="calculateCombinations()">Calculate</button>
+
+  <hr/>
+
+  <div id="result" style="margin-top: 10px;"></div>
+  <div id="combination" style="margin-top: 10px;"></div>
+</body>
+</html>

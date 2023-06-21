@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Question 2: Time Conversion</title>
+  <script>
+    function convertToMilitaryTime() {
+      const timeString = document.getElementById('timeInput').value.trim();
+      const resultDiv = document.getElementById('result');
+
+      // Reset previous result
+      resultDiv.textContent = '';
+
+      // Input validation
+      const timePattern = /^(\d{2}):(\d{2}):(\d{2})(AM|PM)$/;
+      const match = timeString.match(timePattern);
+
+      if (!match) {
+        resultDiv.textContent = 'Invalid time format';
+        return;
+      }
+
+      let hours = parseInt(match[1]);
+      const minutes = parseInt(match[2]);
+      const seconds = parseInt(match[3]);
+      const period = match[4].toUpperCase();
+
+      if (hours === 12) {
+        hours = (period === 'AM' || period === 'am') ? 0 : 12;
+      } else {
+        hours += (period === 'PM' || period === 'pm') ? 12 : 0;
+      }
+
+      const militaryTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      resultDiv.textContent = `Military Time: ${militaryTime}`;
+    }
+  </script>
+</head>
+<body>
+  <h1>Time Conversion</h1>
+
+  <label for="timeInput">Enter time in 12-hour format (hh:mm:ssAM or hh:mm:ssPM):</label>
+  <input type="text" id="timeInput">
+
+  <button onclick="convertToMilitaryTime()">Convert</button>
+  <hr/>
+  <div id="result" style="margin-top: 10px;"></div>
+</body>
+</html>

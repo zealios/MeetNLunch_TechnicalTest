@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Question 3: CamelCase Count</title>
+  <script>
+    function countWords() {
+      const inputString = document.getElementById('inputString').value.trim();
+      const resultDiv = document.getElementById('result');
+
+      // Reset previous result
+      resultDiv.textContent = '';
+
+      // Input validation
+      const wordPattern = /[a-z]+|[A-Z][a-z]*/g;
+      const words = inputString.match(wordPattern) || [];
+
+      if (words.length === 0) {
+        resultDiv.textContent = 'Invalid input format';
+        return;
+      }
+
+      const wordCount = words.length;
+      resultDiv.textContent = `Total number of words: ${wordCount}`;
+    }
+  </script>
+</head>
+<body>
+  <h1>CamelCase Count</h1>
+
+  <label for="inputString">Enter a string:</label>
+  <input type="text" id="inputString">
+
+  <button onclick="countWords()">Count</button>
+
+  <div id="result"></div>
+</body>
+</html>
